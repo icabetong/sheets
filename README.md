@@ -5,6 +5,8 @@
 
 A simple desktop application for recording and storing sale records with accompanying simple dashboard.
 
+[![Test](https://github.com/icabetong/sheets/actions/workflows/test.yml/badge.svg)](https://github.com/icabetong/sheets/actions/workflows/test.yml)
+
 ## Built with
 
 - TypeScript
