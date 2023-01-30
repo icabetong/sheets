@@ -1,33 +1,19 @@
-# Tauri Svelte Template
+# Kantina
 
-- **Tauri**
-- **GitHub action** for cross-platform builds
-- **Svelte**
-- **Vite**
-- **TypeScript**
-- **Preprocessing** with Sass installed by default
-- **ESLint**
-- **Prettier**
+![eslint](https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white)
+![prettier](https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E)
 
-## Dev instructions
+A simple desktop application for recording and storing sale records with accompanying simple dashboard.
 
-### Get started
+## Built with
 
-1. Install Node.js
-2. Install Rust
-3. Follow the [Tauri setup guide](https://tauri.studio/en/docs/get-started/intro)
-4. Run `npm install`
-5. Find and replace the text `tauri-svelte-template` and `Tauri Svelte Template`.
+- TypeScript
+- Svelte
+- Tauri
+- TailwindCSS
+- PocketBase
+- and other [cool libraries](https://github.com/icabetong/me/blob/main/package.json)
 
-### Commands
-- `npm run dev`: Start app in dev mode
-- `npm run build`: Build
-- `npm run lint`: Lint
-- `npm run format`: Format
+## Forking/Cloning
 
-### Release new version
-1. Update `CHANGELOG.md`
-2. Bump the version number in `src-tauri/Cargo.toml`
-3. Run `cargo check` to update `Cargo.lock`
-4. Create a git tag in the format `v#.#.#`
-5. Add release notes to the generated GitHub release and publish it
+You can use the source code of this website for your own, but please add some attributions such us, linking back to [icabetong.me](https://www.icabetong.me) or to this [GitHub Repository](https://www.github.com/icabetong/sheets). Also, please remove my personal information, images, resume link and etc. Thanks!
