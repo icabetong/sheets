@@ -46,6 +46,9 @@
       "active": false
     },
     "allowlist": {
+      "os": {
+        "all": true
+      },
       "shell": {
         "open": true
       }

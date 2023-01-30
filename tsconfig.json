@@ -19,7 +19,14 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+
+    "paths": {
+      "$lib/*": ["src/lib/*"],
+      "$components/*": ["src/components/*"],
+      "$stores/*": ["src/stores/*"],
+      "$shared/*": ["src/shared/*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.svelte"]
 }
