@@ -14,6 +14,7 @@
 		<thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
 			<tr>
 				<th scope="col" class="px-6 py-3"> Customer </th>
+				<th scope="col" class="hidden px-6 py-3 lg:block">Timestamp</th>
 				<th scope="col" class="px-6 py-3"> Product </th>
 				<th scope="col" class="px-6 py-3"> Description </th>
 				<th scope="col" class="px-6 py-3"> Amount </th>

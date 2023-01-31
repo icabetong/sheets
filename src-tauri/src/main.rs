@@ -43,28 +43,36 @@ fn main() {
         "File",
         Menu::with_items([
           CustomMenuItem::new("preferences", "Preferences").into(),
-          MenuItem::CloseWindow.into()
+          MenuItem::Separator.into(),
+          CustomMenuItem::new("quit", "Quit").accelerator("CmdOrControl+Q").into(),
         ]),
       )),
       MenuEntry::Submenu(Submenu::new(
         "Edit",
         Menu::with_items([
-          CustomMenuItem::new("defines", "Defines").into(),
           MenuItem::Undo.into(),
           MenuItem::Redo.into(),
+          #[cfg(target_os = "macos")]
           MenuItem::Separator.into(),
           MenuItem::Cut.into(),
           MenuItem::Copy.into(),
           MenuItem::Paste.into(),
-          #[cfg(not(target_os = "macos"))]
+          #[cfg(target_os = "macos")]
           MenuItem::Separator.into(),
           MenuItem::SelectAll.into(),
+          #[cfg(target_os = "macos")]
+          MenuItem::Separator.into(),
+          CustomMenuItem::new("save", "Save").accelerator("CmdOrControl+S").into(),
+          MenuItem::Separator.into(),
+          CustomMenuItem::new("defines", "Defines").accelerator("CmdOrControl+D").into(),
         ]),
       )),
+      #[cfg(target_os = "macos")]
       MenuEntry::Submenu(Submenu::new(
         "View",
         Menu::with_items([MenuItem::EnterFullScreen.into()]),
       )),
+      #[cfg(target_os = "macos")]
       MenuEntry::Submenu(Submenu::new(
         "Window",
         Menu::with_items([MenuItem::Minimize.into(), MenuItem::Zoom.into()]),
@@ -75,13 +83,16 @@ fn main() {
         "Help",
         Menu::with_items([
           CustomMenuItem::new("repository", "Repository").into(),
-          CustomMenuItem::new("about", "About").into()
+          CustomMenuItem::new("about", "About").accelerator("F1").into()
         ]),
       )),
     ]))
     .on_menu_event(|event| {
       let event_name = event.menu_item_id();
       match event_name {
+        "quit" => {
+          std::process::exit(0);
+        }
         "repository" => {
           let url = "https://github.com/icabetong/sheets".to_string();
           shell::open(&event.window().shell_scope(), url, None).unwrap();

@@ -58,17 +58,20 @@
 		}
 	}
 
-	window.appWindow.onCloseRequested(async () => {
+	const onWriteData = async () => {
 		await onWriteContent('entries.json', $entries)
 		await onWriteContent('defines.json', $defines)
-	})
+	}
+
+	window.appWindow.onCloseRequested(onWriteData)
 	window.appWindow.onMenuClicked(({ payload }) => {
 		switch (payload) {
 			case 'defines':
-				push('/defines')
-				break
 			case 'preferences':
-				push('/preferences')
+				push(`/${payload}`)
+				break
+			case 'save':
+				onWriteData()
 				break
 			case 'about':
 				show = true

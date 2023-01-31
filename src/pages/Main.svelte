@@ -8,15 +8,27 @@
 	import { Icon } from '@steeze-ui/svelte-icon'
 	import { confirm } from '@tauri-apps/api/dialog'
 	import { getCurrencyFormatter } from '$shared/formatter'
+	import JsonSearch from 'search-array'
 
 	const formatter = getCurrencyFormatter(true)
+	let data = $entries
 	let show = false
 	let entry: Entry | null = null
 	let sold: number = 0
 	let profits: number = 0
 	let cash: number = 0
+	let query: string = ''
 
 	$: {
+		let searchQuery = query.trim()
+		if (searchQuery.length > 0) {
+			const searcher = new JsonSearch($entries)
+			data = searcher.query(searchQuery)
+		} else data = $entries
+	}
+
+	$: {
+		console.log($defines)
 		const discount = $defines.discount
 		const rate = discount * 0.01
 
@@ -75,11 +87,12 @@
 					type="text"
 					id="table-search-users"
 					class="block w-80 rounded-lg border border-gray-300 bg-gray-50 p-2 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-					placeholder="Search for users" />
+					placeholder="Search for entries"
+					bind:value={query} />
 			</div>
 		</div>
 		<div class="relative mt-4 overflow-x-auto">
-			<Table entries={$entries} on:select={onTableSelect} on:remove={onTableRemove} />
+			<Table entries={data} on:select={onTableSelect} on:remove={onTableRemove} />
 		</div>
 	</div>
 </div>

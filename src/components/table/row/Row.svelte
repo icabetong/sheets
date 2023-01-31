@@ -2,13 +2,14 @@
 	import { Icon } from '@steeze-ui/svelte-icon'
 	import { Trash } from '@steeze-ui/heroicons'
 	import { createEventDispatcher } from 'svelte'
-	import { getCurrencyFormatter } from '$shared/formatter'
+	import { getCurrencyFormatter, getDateTimeFormatter } from '$shared/formatter'
 
 	const dispatcher = createEventDispatcher<{ select: Entry; remove: Entry }>()
 	const select = () => dispatcher('select', entry)
 	const remove = () => dispatcher('remove', entry)
 
-	const formatter = getCurrencyFormatter(true)
+	const currencyFormatter = getCurrencyFormatter(true)
+	const dateTimeFormatter = getDateTimeFormatter('short')
 	export let entry: Entry
 
 	const onHandleRemove = (e: Event) => {
@@ -23,9 +24,11 @@
 	<th scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
 		{entry.customer}
 	</th>
+	<td class="hidden px-6 py-4 xl:block">{dateTimeFormatter.format(new Date(entry.timestamp))}</td>
 	<td class="px-6 py-4"> {entry.product} </td>
 	<td class="px-6 py-4"> {entry.description} </td>
-	<td class="px-6 py-4"> {formatter.format(entry.amount)} </td>
+	<td class="px-6 py-4"> {currencyFormatter.format(entry.amount)} </td>
+
 	<td class="py-2">
 		<button
 			type="button"
