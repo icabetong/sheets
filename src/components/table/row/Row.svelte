@@ -18,7 +18,7 @@
 </script>
 
 <tr
-	class="cursor-pointer border-b bg-white hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 hover:dark:bg-gray-600"
+	class="border-b bg-white hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 hover:dark:bg-gray-600"
 	on:click={select}>
 	<th scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
 		{entry.customer}
@@ -26,8 +26,11 @@
 	<td class="px-6 py-4"> {entry.product} </td>
 	<td class="px-6 py-4"> {entry.description} </td>
 	<td class="px-6 py-4"> {formatter.format(entry.amount)} </td>
-	<td class="py-4">
-		<button type="button" on:click={onHandleRemove}>
+	<td class="py-2">
+		<button
+			type="button"
+			class="rounded p-2 hover:bg-gray-300 dark:hover:bg-gray-500 dark:hover:text-gray-800"
+			on:click={onHandleRemove}>
 			<Icon src={Trash} class="h-4 w-4" />
 		</button>
 	</td>

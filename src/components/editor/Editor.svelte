@@ -4,6 +4,7 @@
 	import { createEventDispatcher } from 'svelte'
 	import { randomId } from '$shared/tools'
 	import { defines } from '$stores/defines'
+	import Dropdown from '$lib/dropdown/Dropdown.svelte'
 
 	const dispatcher = createEventDispatcher<{ dismiss: void; submit: Entry }>()
 	const dismiss = () => dispatcher('dismiss')
@@ -11,7 +12,7 @@
 	export let entry: Entry | null = null
 	export let show: boolean
 
-	const { form, errors, handleSubmit, state } = createForm<EntryCore>({
+	const { form, errors, state, handleSubmit, updateField } = createForm<EntryCore>({
 		initialValues: {
 			customer: entry?.customer ?? '',
 			product: entry?.product ?? '',
@@ -37,6 +38,10 @@
 			dismiss()
 		}
 	})
+
+	const onProductChanged = ({ detail }: CustomEvent<string>) => updateField('product', detail)
+	const onDescriptionChanged = ({ detail }: CustomEvent<string>) =>
+		updateField('description', detail)
 </script>
 
 <Sidebar {show} on:dismiss={dismiss} title={entry ? 'Edit Entry' : 'Create Entry'}>
@@ -55,12 +60,11 @@
 			<div class="form-group">
 				<label for="product" class="form-label">Product</label>
 				{#if $defines.products.length > 0}
-					<select id="product" class="form-select" bind:value={$form.product}>
-						<option>Choose one</option>
-						{#each $defines.products as product}
-							<option value={product}>{product}</option>
-						{/each}
-					</select>
+					<Dropdown
+						options={$defines.products}
+						value={$form.product}
+						placeholder="Globe Telecom"
+						on:select={onProductChanged} />
 				{:else}
 					<input
 						type="text"
@@ -74,12 +78,11 @@
 			<div class="form-group">
 				<label for="description" class="form-label">Description</label>
 				{#if $defines.descriptions.length > 0}
-					<select id="description" class="form-select" bind:value={$form.description}>
-						<option>Choose one</option>
-						{#each $defines.descriptions as desc}
-							<option value={desc}>{desc}</option>
-						{/each}
-					</select>
+					<Dropdown
+						options={$defines.descriptions}
+						value={$form.description}
+						placeholder="Regular"
+						on:select={onDescriptionChanged} />
 				{:else}
 					<input
 						type="text"
@@ -92,12 +95,18 @@
 			</div>
 			<div class="form-group">
 				<label for="amount" class="form-label">Amount</label>
-				<input
-					type="number"
-					id="amount"
-					class="form-input"
-					class:error={$errors.amount}
-					bind:value={$form.amount} />
+				<div class="flex">
+					<span
+						class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-200 px-3 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-400">
+						₱
+					</span>
+					<input
+						type="number"
+						id="amount"
+						class="form-input rounded-l-none rounded-r-md"
+						class:error={$errors.amount}
+						bind:value={$form.amount} />
+				</div>
 			</div>
 		</div>
 		{#if $state.isModified}
