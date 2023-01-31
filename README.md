@@ -13,7 +13,6 @@ A simple desktop application for recording and storing sale records with accompa
 - Svelte
 - Tauri
 - TailwindCSS
-- PocketBase
 - and other [cool libraries](https://github.com/icabetong/me/blob/main/package.json)
 
 ## Forking/Cloning
