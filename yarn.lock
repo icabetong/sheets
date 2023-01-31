@@ -185,6 +185,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@popperjs/core@^2.11.6":
+  version "2.11.6"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.6.tgz#cee20bd55e68a1720bdab363ecf0c821ded4cd45"
+  integrity sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==
+
 "@steeze-ui/heroicons@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@steeze-ui/heroicons/-/heroicons-2.2.1.tgz#d76072b3bff535053a1a8185b1ec406d8979693d"
@@ -1542,6 +1547,11 @@ svelte-hmr@^0.15.1:
   version "0.15.1"
   resolved "https://registry.yarnpkg.com/svelte-hmr/-/svelte-hmr-0.15.1.tgz#d11d878a0bbb12ec1cba030f580cd2049f4ec86b"
   integrity sha512-BiKB4RZ8YSwRKCNVdNxK/GfY+r4Kjgp9jCLEy0DuqAKfmQtpL38cQK3afdpjw4sqSs4PLi3jIPJIFp259NkZtA==
+
+svelte-popperjs@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/svelte-popperjs/-/svelte-popperjs-1.3.2.tgz#3a4ca11dcaa64760313ae32212a5ad14f8b91484"
+  integrity sha512-fwrErlkvngL876WXRnL3OLlfk/n9YkZwwLxuKRpZOYCJLt1zrwhoKTXS+/sRgDveD/zd6GQ35hV89EOip+NBGA==
 
 svelte-preprocess@^5.0.0:
   version "5.0.1"

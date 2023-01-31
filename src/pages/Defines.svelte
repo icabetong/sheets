@@ -1,39 +1,27 @@
 <script lang="ts">
-	import { confirm } from '@tauri-apps/api/dialog'
 	import { Icon } from '@steeze-ui/svelte-icon'
-	import { ChevronLeft, Plus } from '@steeze-ui/heroicons'
+	import { ChevronLeft } from '@steeze-ui/heroicons'
 	import { pop } from 'svelte-spa-router'
 	import Page from '$lib/page/Page.svelte'
-	import DefineEditor from '$components/define-editor/DefineEditor.svelte'
-	import DefineTable from '$components/define-table/DefineTable.svelte'
 	import { defines } from '$stores/defines'
+	import ChipInput from '$lib/chip-input/ChipInput.svelte'
 
-	let show: boolean = false
-	let define: Define | null = null
-
-	const onTableSelect = (event: CustomEvent<Define>) => {
-		define = event.detail
-		show = true
+	const onProductAdd = ({ detail }: CustomEvent) => {
+		const products = $defines.products
+		products.push(detail)
+		$defines.products = [...products]
 	}
-	const onTableRemove = async ({ detail }: CustomEvent<Define>) => {
-		const confirmed = await confirm('Are you sure you want to delete this define?')
-
-		if (confirmed) {
-			$defines = $defines.filter((d) => d.id !== detail.id)
-		}
+	const onProductRemove = ({ detail }: CustomEvent) => {
+		$defines.products = $defines.products.filter((p) => p !== detail)
 	}
-	const onEditorCreate = () => {
-		define = null
-		show = !show
+
+	const onDescriptionAdd = ({ detail }: CustomEvent) => {
+		const descriptions = $defines.descriptions
+		descriptions.push(detail)
+		$defines.descriptions = [...descriptions]
 	}
-	const onEditorSubmit = ({ detail }: CustomEvent<Define>) => {
-		let newDefines = Array.from($defines)
-		const index = newDefines.findIndex((d) => d.id === detail.id)
-
-		if (index >= 0) newDefines[index] = detail
-		else newDefines.push(detail)
-
-		$defines = newDefines
+	const onDescriptionRemove = ({ detail }: CustomEvent) => {
+		$defines.descriptions = $defines.descriptions.filter((p) => p !== detail)
 	}
 </script>
 
@@ -43,15 +31,28 @@
 			<Icon src={ChevronLeft} class="mr-4 h-6 w-6" />
 		</button>
 		<h1 class="header flex-1">Defines</h1>
-		<button class="button-primary flex items-center px-4" on:click={onEditorCreate}>
-			<Icon src={Plus} class="mr-2 h-6 w-6" />
-			<span>Create</span>
-		</button>
 	</div>
 	<div class="relative mt-4 overflow-x-auto">
-		<DefineTable defines={$defines} on:select={onTableSelect} on:remove={onTableRemove} />
+		<form>
+			<div class="form-group">
+				<label for="fee" class="form-label">Fee</label>
+				<input type="text" id="fee" class="form-input" bind:value={$defines.fee} />
+			</div>
+			<div class="form-group">
+				<label for="discount" class="form-label">Discount</label>
+				<input type="text" id="discount" class="form-input" bind:value={$defines.discount} />
+			</div>
+			<div class="form-group">
+				<label for="products" class="form-label">Products</label>
+				<ChipInput chips={$defines.products} on:add={onProductAdd} on:remove={onProductRemove} />
+			</div>
+			<div class="form-group">
+				<label for="descriptions" class="form-label">Descriptions</label>
+				<ChipInput
+					chips={$defines.descriptions}
+					on:add={onDescriptionAdd}
+					on:remove={onDescriptionRemove} />
+			</div>
+		</form>
 	</div>
 </Page>
-{#if show}
-	<DefineEditor {define} {show} on:dismiss={() => (show = !show)} on:submit={onEditorSubmit} />
-{/if}

@@ -1,14 +1,29 @@
 <script lang="ts">
 	import Card from '$components/card/Card.svelte'
-	import EntryEditor from '$components/entry-editor/EntryEditor.svelte'
-	import EntryTable from '$components/entry-table/EntryTable.svelte'
+	import Editor from '$components/editor/Editor.svelte'
+	import Table from '$components/table/Table.svelte'
 	import { entries } from '$stores/entries'
+	import { defines } from '$stores/defines'
 	import { MagnifyingGlass, Plus } from '@steeze-ui/heroicons'
 	import { Icon } from '@steeze-ui/svelte-icon'
 	import { confirm } from '@tauri-apps/api/dialog'
+	import { getCurrencyFormatter } from '$shared/formatter'
 
+	const formatter = getCurrencyFormatter(true)
 	let show = false
 	let entry: Entry | null = null
+	let sold: number = 0
+	let profits: number = 0
+	let cash: number = 0
+
+	$: {
+		const discount = $defines.discount
+		const rate = discount * 0.01
+
+		profits = $entries.reduce((acc, entry) => acc + (entry.amount * rate + $defines.fee), 0)
+		sold = $entries.reduce((acc, entry) => acc + entry.amount, 0)
+		cash = sold + $entries.length * $defines.fee
+	}
 
 	const onTableSelect = (event: CustomEvent<Entry>) => {
 		entry = event.detail
@@ -44,11 +59,11 @@
 			<span>Create</span>
 		</button>
 	</div>
-	<div class="overflow-scroll">
+	<div class="flex h-full flex-col overflow-scroll">
 		<div class="mb-6 grid grid-cols-3 gap-4">
-			<Card title="Amount Sold" value="80PHP" />
-			<Card title="Profits" value="80PHP" />
-			<Card title="Cash-in-Hand" value="80PHP" />
+			<Card title="Amount Sold" value={formatter.format(sold)} />
+			<Card title="Profits" value={formatter.format(profits)} />
+			<Card title="Cash-in-Hand" value={formatter.format(cash)} />
 		</div>
 		<div class="flex items-center justify-end">
 			<label for="table-search" class="sr-only">Search</label>
@@ -64,10 +79,10 @@
 			</div>
 		</div>
 		<div class="relative mt-4 overflow-x-auto">
-			<EntryTable entries={$entries} on:select={onTableSelect} on:remove={onTableRemove} />
+			<Table entries={$entries} on:select={onTableSelect} on:remove={onTableRemove} />
 		</div>
 	</div>
 </div>
 {#if show}
-	<EntryEditor {show} {entry} on:dismiss={() => (show = !show)} on:submit={onEditorSubmit} />
+	<Editor {show} {entry} on:dismiss={() => (show = !show)} on:submit={onEditorSubmit} />
 {/if}

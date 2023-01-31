@@ -7,14 +7,13 @@ declare global {
 	}
 	interface Entry extends EntryCore {
 		id: string
+		timestamp: number
 	}
-	interface DefineCore {
-		name: string
-		price: number
-		discountedPrice?: number
-	}
-	interface Define extends DefineCore {
-		id: string
+	interface Define {
+		fee: number
+		discount: number
+		products: string[]
+		descriptions: string[]
 	}
 
 	interface EntryFormError {
@@ -23,10 +22,11 @@ declare global {
 		description?: string
 		amount?: string
 	}
-	interface DefineFormError {
-		name?: string
-		price?: string
-		discountedPrice?: string
+}
+
+declare namespace svelte.JSX {
+	interface HTMLProps<T> {
+		onclickOutside?: (e: CustomEvent) => void
 	}
 }
 export {}

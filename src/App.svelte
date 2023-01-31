@@ -3,6 +3,7 @@
 	import { window, os } from '@tauri-apps/api'
 	import { onMount } from 'svelte'
 	import Main from '$pages/Main.svelte'
+	import Defines from '$pages/Defines.svelte'
 	import Preferences from '$pages/Preferences.svelte'
 	import Modal from '$lib/modal/Modal.svelte'
 	import { darkTheme } from './stores/theme'
@@ -10,7 +11,6 @@
 	import { entries } from '$stores/entries'
 	import { defines } from '$stores/defines'
 	import { onReadContent, onWriteContent } from '$shared/storage'
-	import Defines from '$pages/Defines.svelte'
 
 	let show = false
 	onMount(async () => {
@@ -34,17 +34,24 @@
 
 	const onPrepareDataStorage = async () => {
 		try {
-			const dataExists = await exists('data.json', { dir })
-			if (!dataExists) {
+			let fileExists = await exists('entries.json', { dir })
+			if (!fileExists) {
 				await onCreateStorage()
 				await onWriteContent('entries.json', [])
-				await onWriteContent('defines.json', [])
+			}
+			if (!fileExists) {
+				await onWriteContent('defines.json', {
+					fee: 3,
+					discount: 0,
+					products: [],
+					descriptions: []
+				})
 			}
 
-			let parsedEntries: Entry[] = await onReadContent('entries.json')
+			let parsedEntries: Entry[] = await onReadContent<Entry[]>('entries.json')
 			entries.set(parsedEntries)
 
-			let parsedDefines: Define[] = await onReadContent('defines.json')
+			let parsedDefines: Define = await onReadContent<Define>('defines.json')
 			defines.set(parsedDefines)
 		} catch (e) {
 			console.error(e)

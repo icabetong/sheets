@@ -3,6 +3,7 @@
 	import { createForm } from 'svelte-forms-lib'
 	import { createEventDispatcher } from 'svelte'
 	import { randomId } from '$shared/tools'
+	import { defines } from '$stores/defines'
 
 	const dispatcher = createEventDispatcher<{ dismiss: void; submit: Entry }>()
 	const dismiss = () => dispatcher('dismiss')
@@ -28,7 +29,11 @@
 			return errors
 		},
 		onSubmit: (form) => {
-			dispatcher('submit', { ...form, id: entry !== null ? entry.id : randomId() })
+			dispatcher('submit', {
+				...form,
+				id: entry !== null ? entry.id : randomId(),
+				timestamp: Date.now()
+			})
 			dismiss()
 		}
 	})
@@ -49,23 +54,41 @@
 			</div>
 			<div class="form-group">
 				<label for="product" class="form-label">Product</label>
-				<input
-					type="text"
-					id="product"
-					class="form-input"
-					placeholder="Globe Telecom"
-					class:error={$errors.product}
-					bind:value={$form.product} />
+				{#if $defines.products.length > 0}
+					<select id="product" class="form-select" bind:value={$form.product}>
+						<option>Choose one</option>
+						{#each $defines.products as product}
+							<option value={product}>{product}</option>
+						{/each}
+					</select>
+				{:else}
+					<input
+						type="text"
+						id="product"
+						class="form-input"
+						placeholder="Globe Telecom"
+						class:error={$errors.product}
+						bind:value={$form.product} />
+				{/if}
 			</div>
 			<div class="form-group">
 				<label for="description" class="form-label">Description</label>
-				<input
-					type="text"
-					id="description"
-					class="form-input"
-					placeholder="Regular Load"
-					class:error={$errors.description}
-					bind:value={$form.description} />
+				{#if $defines.descriptions.length > 0}
+					<select id="description" class="form-select" bind:value={$form.description}>
+						<option>Choose one</option>
+						{#each $defines.descriptions as desc}
+							<option value={desc}>{desc}</option>
+						{/each}
+					</select>
+				{:else}
+					<input
+						type="text"
+						id="description"
+						class="form-input"
+						placeholder="Regular"
+						class:error={$errors.description}
+						bind:value={$form.description} />
+				{/if}
 			</div>
 			<div class="form-group">
 				<label for="amount" class="form-label">Amount</label>
