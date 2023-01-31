@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { BaseDirectory, createDir, exists, writeTextFile } from '@tauri-apps/api/fs'
+	import { BaseDirectory, createDir, exists, readDir, readTextFile } from '@tauri-apps/api/fs'
 	import { window, os } from '@tauri-apps/api'
+	import { open } from '@tauri-apps/api/dialog'
+	import { dataDir, documentDir } from '@tauri-apps/api/path'
 	import { onMount } from 'svelte'
 	import Main from '$pages/Main.svelte'
 	import Defines from '$pages/Defines.svelte'

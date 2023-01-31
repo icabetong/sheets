@@ -28,7 +28,6 @@
 	}
 
 	$: {
-		console.log($defines)
 		const discount = $defines.discount
 		const rate = discount * 0.01
 

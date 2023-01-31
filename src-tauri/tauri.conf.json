@@ -52,15 +52,12 @@
 			"os": {
 				"all": true
 			},
-			"dialog": {
-				"all": true
-			},
 			"shell": {
 				"open": true
 			},
 			"fs": {
 				"all": true,
-				"scope": ["$APP/*", "$DESKTOP/*", "$APPDATA/*"]
+				"scope": ["$APP/*", "$APPDATA/*", "$DESKTOP/*"]
 			},
 			"path": {
 				"all": true
