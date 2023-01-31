@@ -1,32 +1,33 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "esnext",
+		"moduleResolution": "node",
 
-    // require `import type` instead fo `import` for types
-    // svelte-preprocess apparently needs this
-    "importsNotUsedAsValues": "error",
-    "isolatedModules": true,
+		// require `import type` instead fo `import` for types
+		// svelte-preprocess apparently needs this
+		"importsNotUsedAsValues": "error",
+		"isolatedModules": true,
 
-    // To have svelte warnings/errors correct position
-    "sourceMap": true,
+		// To have svelte warnings/errors correct position
+		"sourceMap": true,
 
-    // Prevent type errors
-    "types": ["svelte"],
+		// Prevent type errors
+		"types": ["svelte"],
 
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"baseUrl": ".",
 
-    "paths": {
-      "$lib/*": ["src/lib/*"],
-      "$components/*": ["src/components/*"],
-      "$stores/*": ["src/stores/*"],
-      "$shared/*": ["src/shared/*"]
-    }
-  },
-  "include": ["src/**/*.ts", "src/**/*.svelte"]
+		"paths": {
+			"$lib/*": ["src/lib/*"],
+			"$components/*": ["src/components/*"],
+			"$stores/*": ["src/stores/*"],
+			"$shared/*": ["src/shared/*"],
+			"$pages/*": ["src/pages/*"]
+		}
+	},
+	"include": ["src/**/*.ts", "src/**/*.svelte"]
 }

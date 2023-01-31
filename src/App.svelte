@@ -1,9 +1,18 @@
 <script lang="ts">
+	import { BaseDirectory, createDir, exists, writeTextFile } from '@tauri-apps/api/fs'
 	import { window, os } from '@tauri-apps/api'
 	import { onMount } from 'svelte'
-	import Main from './pages/Main.svelte'
+	import Main from '$pages/Main.svelte'
+	import Preferences from '$pages/Preferences.svelte'
+	import Modal from '$lib/modal/Modal.svelte'
 	import { darkTheme } from './stores/theme'
+	import Router, { push } from 'svelte-spa-router'
+	import { entries } from '$stores/entries'
+	import { defines } from '$stores/defines'
+	import { onReadContent, onWriteContent } from '$shared/storage'
+	import Defines from '$pages/Defines.svelte'
 
+	let show = false
 	onMount(async () => {
 		let hostOS = await os.type()
 		if (hostOS === 'Linux') $darkTheme = true
@@ -11,10 +20,71 @@
 
 		if ($darkTheme) document.body.classList.add('dark')
 		else document.body.classList.remove('dark')
+
+		await onPrepareDataStorage()
 	})
+
+	const dir = BaseDirectory.AppData
+	const onCreateStorage = async () => {
+		await createDir('data', {
+			dir,
+			recursive: true
+		})
+	}
+
+	const onPrepareDataStorage = async () => {
+		try {
+			const dataExists = await exists('data.json', { dir })
+			if (!dataExists) {
+				await onCreateStorage()
+				await onWriteContent('entries.json', [])
+				await onWriteContent('defines.json', [])
+			}
+
+			let parsedEntries: Entry[] = await onReadContent('entries.json')
+			entries.set(parsedEntries)
+
+			let parsedDefines: Define[] = await onReadContent('defines.json')
+			defines.set(parsedDefines)
+		} catch (e) {
+			console.error(e)
+		}
+	}
+
+	window.appWindow.onCloseRequested(async () => {
+		await onWriteContent('entries.json', $entries)
+		await onWriteContent('defines.json', $defines)
+	})
+	window.appWindow.onMenuClicked(({ payload }) => {
+		switch (payload) {
+			case 'defines':
+				push('/defines')
+				break
+			case 'preferences':
+				push('/preferences')
+				break
+			case 'about':
+				show = true
+				break
+		}
+	})
+
+	const routes = {
+		'/': Main,
+		'/defines': Defines,
+		'/preferences': Preferences
+	}
 </script>
 
-<Main />
+<Router {routes} />
+<Modal {show} width="sm" on:dismiss={() => (show = !show)}>
+	<div class="flex flex-col items-center justify-center">
+		<img src="images/icon.png" alt="application icon" class="h-16 w-16" width="64" height="64" />
+		<h2 class="text-xl font-semibold">Sheets</h2>
+		<p class="mb-4 text-sm text-gray-500">© 2022 Isaiah Collins Abetong</p>
+		<button class="button-primary" on:click={() => (show = !show)}>Close</button>
+	</div>
+</Modal>
 
 <style lang="postcss">
 	:global(body) {

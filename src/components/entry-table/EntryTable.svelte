@@ -1,5 +1,10 @@
 <script lang="ts">
-	import EntryRow from './row/Row.svelte'
+	import { createEventDispatcher } from 'svelte'
+	import EntryRow from './entry-row/EntryRow.svelte'
+
+	const dispatcher = createEventDispatcher<{ select: Entry; remove: Entry }>()
+	const select = (e: CustomEvent<Entry>) => dispatcher('select', e.detail)
+	const remove = (e: CustomEvent<Entry>) => dispatcher('remove', e.detail)
 
 	export let entries: Entry[]
 </script>
@@ -11,11 +16,14 @@
 			<th scope="col" class="px-6 py-3"> Product </th>
 			<th scope="col" class="px-6 py-3"> Description </th>
 			<th scope="col" class="px-6 py-3"> Amount </th>
+			<th scope="col" class="px-6 py-3">
+				<span class="sr-only">Actions</span>
+			</th>
 		</tr>
 	</thead>
 	<tbody>
 		{#each entries as entry}
-			<EntryRow {entry} />
+			<EntryRow {entry} on:select={select} on:remove={remove} />
 		{/each}
 	</tbody>
 </table>

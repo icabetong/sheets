@@ -1,27 +1,45 @@
 <script lang="ts">
 	import Card from '$components/card/Card.svelte'
-	import Editor from '$components/editor/Editor.svelte'
-	import Table from '$components/table/Table.svelte'
+	import EntryEditor from '$components/entry-editor/EntryEditor.svelte'
+	import EntryTable from '$components/entry-table/EntryTable.svelte'
+	import { entries } from '$stores/entries'
 	import { MagnifyingGlass, Plus } from '@steeze-ui/heroicons'
 	import { Icon } from '@steeze-ui/svelte-icon'
+	import { confirm } from '@tauri-apps/api/dialog'
 
 	let show = false
 	let entry: Entry | null = null
 
-	let entries: Entry[] = [
-		{ id: 'K', customer: 'Teddy', product: 'Regular', description: 'Globe', amount: 8 },
-		{ id: 'K', customer: 'Teddy', product: 'Regular', description: 'Globe', amount: 8 },
-		{ id: 'K', customer: 'Teddy', product: 'Regular', description: 'Globe', amount: 8 },
-		{ id: 'K', customer: 'Teddy', product: 'Regular', description: 'Globe', amount: 8 },
-		{ id: 'K', customer: 'Teddy', product: 'Regular', description: 'Globe', amount: 8 },
-		{ id: 'K', customer: 'Teddy', product: 'Regular', description: 'Globe', amount: 8 }
-	]
+	const onTableSelect = (event: CustomEvent<Entry>) => {
+		entry = event.detail
+		show = true
+	}
+	const onTableRemove = async ({ detail }: CustomEvent<Entry>) => {
+		const confirmed = await confirm('Are you sure you want to delete this entry?')
+
+		if (confirmed) {
+			$entries = $entries.filter((e) => e.id !== detail.id)
+		}
+	}
+	const onEditorCreate = () => {
+		entry = null
+		show = true
+	}
+	const onEditorSubmit = ({ detail }: CustomEvent<Entry>) => {
+		let newEntries = Array.from($entries)
+		const index = newEntries.findIndex((e) => e.id === detail.id)
+
+		if (index >= 0) newEntries[index] = detail
+		else newEntries.push(detail)
+
+		$entries = newEntries
+	}
 </script>
 
 <div class="page">
 	<div class="sticky top-0 flex items-center bg-white py-8 dark:bg-gray-800">
 		<h1 class="header flex-1">Sales</h1>
-		<button class="button-primary flex items-center py-1.5 px-4" on:click={() => (show = !show)}>
+		<button class="button-primary flex items-center px-4" on:click={onEditorCreate}>
 			<Icon src={Plus} class="mr-2 h-6 w-6" />
 			<span>Create</span>
 		</button>
@@ -46,8 +64,10 @@
 			</div>
 		</div>
 		<div class="relative mt-4 overflow-x-auto">
-			<Table {entries} />
+			<EntryTable entries={$entries} on:select={onTableSelect} on:remove={onTableRemove} />
 		</div>
 	</div>
 </div>
-<Editor {show} {entry} onDismiss={() => (show = false)} />
+{#if show}
+	<EntryEditor {show} {entry} on:dismiss={() => (show = !show)} on:submit={onEditorSubmit} />
+{/if}

@@ -2,8 +2,8 @@ export function getCurrencyFormatter(withDecimal = true): Intl.NumberFormat {
 	return Intl.NumberFormat('en-PH', {
 		style: 'currency',
 		currency: 'PHP',
-		maximumFractionDigits: withDecimal ? undefined : 0,
-		minimumFractionDigits: withDecimal ? undefined : 0
+		maximumFractionDigits: withDecimal ? 2 : 0,
+		minimumFractionDigits: withDecimal ? 2 : 0
 	})
 }
 

@@ -5,7 +5,7 @@
 
 use tauri::api::shell;
 use tauri::{
-  AboutMetadata, CustomMenuItem, Manager, Menu, MenuEntry, MenuItem, Submenu, WindowBuilder,
+  CustomMenuItem, Manager, Menu, MenuEntry, MenuItem, Submenu, WindowBuilder,
   WindowUrl,
 };
 
@@ -41,11 +41,15 @@ fn main() {
       )),
       MenuEntry::Submenu(Submenu::new(
         "File",
-        Menu::with_items([MenuItem::CloseWindow.into()]),
+        Menu::with_items([
+          CustomMenuItem::new("preferences", "Preferences").into(),
+          MenuItem::CloseWindow.into()
+        ]),
       )),
       MenuEntry::Submenu(Submenu::new(
         "Edit",
         Menu::with_items([
+          CustomMenuItem::new("defines", "Defines").into(),
           MenuItem::Undo.into(),
           MenuItem::Redo.into(),
           MenuItem::Separator.into(),
@@ -69,13 +73,16 @@ fn main() {
       // show a menu search field
       MenuEntry::Submenu(Submenu::new(
         "Help",
-        Menu::with_items([CustomMenuItem::new("Learn More", "Learn More").into()]),
+        Menu::with_items([
+          CustomMenuItem::new("repository", "Repository").into(),
+          CustomMenuItem::new("about", "About").into()
+        ]),
       )),
     ]))
     .on_menu_event(|event| {
       let event_name = event.menu_item_id();
       match event_name {
-        "Learn More" => {
+        "repository" => {
           let url = "https://github.com/icabetong/sheets".to_string();
           shell::open(&event.window().shell_scope(), url, None).unwrap();
         }

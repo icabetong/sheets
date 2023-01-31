@@ -2,10 +2,13 @@
 	import { fly } from 'svelte/transition'
 	import { XMark } from '@steeze-ui/heroicons'
 	import { Icon } from '@steeze-ui/svelte-icon'
+	import { createEventDispatcher } from 'svelte'
+
+	const dispatcher = createEventDispatcher()
+	const dismiss = () => dispatcher('dismiss')
 
 	export let show: boolean
 	export let title: string
-	export let onDismiss: () => void
 </script>
 
 {#if show}
@@ -17,7 +20,7 @@
 			<button
 				type="button"
 				class="rounded hover:bg-gray-200 dark:hover:bg-gray-700"
-				on:click={onDismiss}>
+				on:click={dismiss}>
 				<Icon src={XMark} class="h-6 w-6" />
 			</button>
 		</div>

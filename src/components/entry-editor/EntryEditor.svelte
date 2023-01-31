@@ -1,10 +1,14 @@
 <script lang="ts">
 	import Sidebar from '$lib/sidebar/Sidebar.svelte'
 	import { createForm } from 'svelte-forms-lib'
+	import { createEventDispatcher } from 'svelte'
+	import { randomId } from '$shared/tools'
+
+	const dispatcher = createEventDispatcher<{ dismiss: void; submit: Entry }>()
+	const dismiss = () => dispatcher('dismiss')
 
 	export let entry: Entry | null = null
 	export let show: boolean
-	export let onDismiss: () => void
 
 	const { form, errors, handleSubmit, state } = createForm<EntryCore>({
 		initialValues: {
@@ -23,11 +27,14 @@
 
 			return errors
 		},
-		onSubmit: async (form) => {}
+		onSubmit: (form) => {
+			dispatcher('submit', { ...form, id: entry !== null ? entry.id : randomId() })
+			dismiss()
+		}
 	})
 </script>
 
-<Sidebar {show} {onDismiss} title={entry ? 'Edit Entry' : 'Create Entry'}>
+<Sidebar {show} on:dismiss={dismiss} title={entry ? 'Edit Entry' : 'Create Entry'}>
 	<form class="flex flex-1 flex-col" on:submit={handleSubmit}>
 		<div class="flex-1">
 			<div class="form-group">

@@ -1,60 +1,73 @@
 {
-  "package": {
-    "productName": "Tauri Svelte Template"
-  },
-  "build": {
-    "distDir": "../build",
-    "devPath": "http://localhost:3000",
-    "beforeDevCommand": "npm run dev:web",
-    "beforeBuildCommand": "npm run build:web"
-  },
-  "tauri": {
-    "bundle": {
-      "active": true,
-      "targets": ["dmg", "deb", "appimage", "msi"],
-      "identifier": "com.example.tauri-svelte-template",
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "resources": [],
-      "externalBin": [],
-      "copyright": "© 2022 Tauri Svelte Template",
-      "category": "DeveloperTool",
-      "shortDescription": "",
-      "longDescription": "",
-      "deb": {
-        "depends": []
-      },
-      "macOS": {
-        "frameworks": [],
-        "minimumSystemVersion": "10.13",
-        "exceptionDomain": "",
-        "signingIdentity": null,
-        "entitlements": null
-      },
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": ""
-      }
-    },
-    "updater": {
-      "active": false
-    },
-    "allowlist": {
-      "os": {
-        "all": true
-      },
-      "shell": {
-        "open": true
-      }
-    },
-    "security": {
-      "csp": null
-    }
-  }
+	"package": {
+		"productName": "Sheets"
+	},
+	"build": {
+		"distDir": "../build",
+		"devPath": "http://localhost:3000",
+		"beforeDevCommand": "npm run dev:web",
+		"beforeBuildCommand": "npm run build:web"
+	},
+	"tauri": {
+		"bundle": {
+			"active": true,
+			"targets": ["dmg", "deb", "appimage", "msi"],
+			"identifier": "me.icabetong.sheets",
+			"icon": [
+				"icons/32x32.png",
+				"icons/128x128.png",
+				"icons/128x128@2x.png",
+				"icons/icon.icns",
+				"icons/icon.ico"
+			],
+			"resources": [],
+			"externalBin": [],
+			"copyright": "© 2022 Isaiah Collins Abetong",
+			"category": "Utilities",
+			"shortDescription": "",
+			"longDescription": "",
+			"deb": {
+				"depends": []
+			},
+			"macOS": {
+				"frameworks": [],
+				"minimumSystemVersion": "10.13",
+				"exceptionDomain": "",
+				"signingIdentity": null,
+				"entitlements": null
+			},
+			"windows": {
+				"certificateThumbprint": null,
+				"digestAlgorithm": "sha256",
+				"timestampUrl": ""
+			}
+		},
+		"updater": {
+			"active": false
+		},
+		"allowlist": {
+			"window": {
+				"close": true
+			},
+			"os": {
+				"all": true
+			},
+			"dialog": {
+				"all": true
+			},
+			"shell": {
+				"open": true
+			},
+			"fs": {
+				"all": true,
+				"scope": ["$APP/*", "$DESKTOP/*", "$APPDATA/*"]
+			},
+			"path": {
+				"all": true
+			}
+		},
+		"security": {
+			"csp": null
+		}
+	}
 }
