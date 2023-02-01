@@ -117,6 +117,7 @@
 
 <style lang="postcss">
 	.error {
-		@apply border-red-500 text-red-500 focus:border-red-500 !important;
+		color: theme(colors.red.500) !important;
+		border-color: theme(borderColor.red.500) !important;
 	}
 </style>

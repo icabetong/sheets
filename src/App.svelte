@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { BaseDirectory, createDir, exists } from '@tauri-apps/api/fs'
+	import { open } from '@tauri-apps/api/dialog'
+	import { BaseDirectory, createDir, exists, readTextFile } from '@tauri-apps/api/fs'
 	import { window, os } from '@tauri-apps/api'
 	import { onMount } from 'svelte'
 	import Main from '$pages/Main.svelte'
@@ -11,6 +12,7 @@
 	import { entries } from '$stores/entries'
 	import { defines } from '$stores/defines'
 	import { onReadContent, onWriteContent } from '$shared/storage'
+	import { parseFromCSV } from '$shared/parser'
 
 	let show = false
 	onMount(async () => {
@@ -63,6 +65,15 @@
 		await onWriteContent('defines.json', $defines)
 	}
 
+	const onImportData = async () => {
+		const path = await open()
+		if (Array.isArray(path) || !path) return
+
+		const source = await readTextFile(path)
+		$entries = $entries.concat(parseFromCSV(source))
+		await onWriteContent('entries.json', $entries)
+	}
+
 	window.appWindow.onCloseRequested(onWriteData)
 	window.appWindow.onMenuClicked(({ payload }) => {
 		switch (payload) {
@@ -72,6 +83,9 @@
 				break
 			case 'save':
 				onWriteData()
+				break
+			case 'import':
+				onImportData()
 				break
 			case 'about':
 				show = true
@@ -98,9 +112,9 @@
 
 <style lang="postcss">
 	:global(body) {
-		@apply bg-white;
+		background: theme(colors.white);
 	}
 	:global(body.dark) {
-		@apply bg-gray-800;
+		background: theme(colors.gray.800);
 	}
 </style>
