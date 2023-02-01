@@ -25,8 +25,10 @@ declare global {
 }
 
 declare namespace svelte.JSX {
+	/* eslint-disable @typescript-eslint/no-unused-vars */
 	interface HTMLProps<T> {
 		onClickOutside?: (e: CustomEvent) => void
 	}
+	/* eslint-enable @typescript-eslint/no-unused-vars */
 }
 export {}

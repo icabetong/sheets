@@ -6,7 +6,7 @@
 	const dispatcher = createEventDispatcher<{ add: string; remove: string }>()
 
 	export let chips: string[]
-	let inputValue: string = ''
+	let inputValue = ''
 
 	const onHandleKeyDown = (e: KeyboardEvent) => {
 		if (e.code === 'Space' || e.code === 'Enter') {

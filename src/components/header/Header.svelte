@@ -3,7 +3,7 @@
 	import { ChevronLeft } from '@steeze-ui/heroicons'
 	import { pop } from 'svelte-spa-router'
 
-	export let showBack: boolean = false
+	export let showBack = false
 	export let title: string
 </script>
 

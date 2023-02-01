@@ -42,6 +42,8 @@ fn main() {
       MenuEntry::Submenu(Submenu::new(
         "File",
         Menu::with_items([
+          CustomMenuItem::new("import", "Import").into(),
+          MenuItem::Separator.into(),
           CustomMenuItem::new("preferences", "Preferences").into(),
           MenuItem::Separator.into(),
           CustomMenuItem::new("quit", "Quit").accelerator("CmdOrControl+Q").into(),

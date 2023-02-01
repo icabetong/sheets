@@ -8,9 +8,11 @@
 	export let show: boolean
 	export let width: 'sm' | 'md' | 'lg' = 'md'
 
-	const onOutsideClick = (e: Event) => {
-		// @ts-ignore
-		if ('close' in e.target?.dataset) dismiss()
+	const onOutsideClick = (e: MouseEvent) => {
+		if (e.target) {
+			let element = e.target as HTMLElement
+			if ('close' in element.dataset) dismiss()
+		}
 	}
 </script>
 

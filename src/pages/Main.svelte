@@ -8,22 +8,20 @@
 	import { Icon } from '@steeze-ui/svelte-icon'
 	import { confirm } from '@tauri-apps/api/dialog'
 	import { getCurrencyFormatter } from '$shared/formatter'
-	import JsonSearch from 'search-array'
+	import { search } from '$shared/searcher'
 
 	const formatter = getCurrencyFormatter(true)
 	let data = $entries
 	let show = false
 	let entry: Entry | null = null
-	let sold: number = 0
-	let profits: number = 0
-	let cash: number = 0
-	let query: string = ''
+	let sold = 0
+	let profits = 0
+	let cash = 0
+	let query = ''
 
 	$: {
-		let searchQuery = query.trim()
-		if (searchQuery.length > 0) {
-			const searcher = new JsonSearch($entries)
-			data = searcher.query(searchQuery)
+		if (query.trim().length > 0) {
+			data = search($entries, query)
 		} else data = $entries
 	}
 
