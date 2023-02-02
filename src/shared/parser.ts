@@ -1,5 +1,3 @@
-import { randomId } from './tools'
-
 /**
  * A function that converts raw string of comma-delimited
  * values to JavaScript's object notation.
