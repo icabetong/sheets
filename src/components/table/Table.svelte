@@ -2,7 +2,10 @@
 	import { createEventDispatcher } from 'svelte'
 	import EntryRow from './row/Row.svelte'
 
-	const dispatcher = createEventDispatcher<{ select: Entry; remove: Entry }>()
+	const dispatcher = createEventDispatcher<{
+		select: Entry
+		remove: Entry
+	}>()
 	const select = (e: CustomEvent<Entry>) => dispatcher('select', e.detail)
 	const remove = (e: CustomEvent<Entry>) => dispatcher('remove', e.detail)
 

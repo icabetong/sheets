@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Icon } from '@steeze-ui/svelte-icon'
-	import { Trash } from '@steeze-ui/heroicons'
 	import { createEventDispatcher } from 'svelte'
 	import { getCurrencyFormatter, getDateTimeFormatter } from '$shared/formatter'
+
+	export let entry: Entry
 
 	const dispatcher = createEventDispatcher<{ select: Entry; remove: Entry }>()
 	const select = () => dispatcher('select', entry)
@@ -10,12 +10,6 @@
 
 	const currencyFormatter = getCurrencyFormatter(true)
 	const dateTimeFormatter = getDateTimeFormatter('short')
-	export let entry: Entry
-
-	const onHandleRemove = (e: Event) => {
-		e.stopPropagation()
-		remove()
-	}
 </script>
 
 <tr
@@ -32,9 +26,9 @@
 	<td class="py-2">
 		<button
 			type="button"
-			class="rounded p-2 hover:bg-gray-300 dark:hover:bg-gray-500 dark:hover:text-gray-800"
-			on:click={onHandleRemove}>
-			<Icon src={Trash} class="h-4 w-4" />
+			class="rounded p-2 text-sm font-medium text-red-500 hover:underline"
+			on:click|stopPropagation={remove}>
+			Remove
 		</button>
 	</td>
 </tr>

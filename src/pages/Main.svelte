@@ -34,8 +34,8 @@
 		cash = sold + $entries.length * $defines.fee
 	}
 
-	const onTableSelect = (event: CustomEvent<Entry>) => {
-		entry = event.detail
+	const onTableSelect = ({ detail }: CustomEvent<Entry>) => {
+		entry = detail
 		show = true
 	}
 	const onTableRemove = async ({ detail }: CustomEvent<Entry>) => {
