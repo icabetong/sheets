@@ -1,4 +1,5 @@
 import { BaseDirectory, readTextFile, writeTextFile } from '@tauri-apps/api/fs'
+import { getExtension, getFilename, isDev } from './tools'
 
 /**
  * An asynchronous function that utilizes Tauri's
@@ -9,6 +10,12 @@ import { BaseDirectory, readTextFile, writeTextFile } from '@tauri-apps/api/fs'
  * @returns the parsed JSON object
  */
 export async function onReadContent<T>(file: string): Promise<T> {
+	if (isDev()) {
+		const extension = getExtension(file)
+		const filename = getFilename(file)
+		file = `${filename}-dev.${extension}`
+	}
+
 	const content = await readTextFile(file, { dir: BaseDirectory.AppData })
 	const parsed = JSON.parse(content)
 	return parsed
@@ -24,6 +31,12 @@ export async function onReadContent<T>(file: string): Promise<T> {
  * @returns
  */
 export async function onWriteContent<T>(file: string, contents: T): Promise<void> {
+	if (isDev()) {
+		const extension = getExtension(file)
+		const filename = getFilename(file)
+		file = `${filename}-dev.${extension}`
+	}
+
 	return await writeTextFile(
 		{
 			contents: JSON.stringify(contents),

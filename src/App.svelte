@@ -29,7 +29,7 @@
 
 	const dir = BaseDirectory.AppData
 	const onCreateStorage = async () => {
-		await createDir('data', {
+		await createDir(env, {
 			dir,
 			recursive: true
 		})
@@ -42,6 +42,8 @@
 				await onCreateStorage()
 				await onWriteContent('entries.json', [])
 			}
+			fileExists = await exists('defines.json', { dir })
+
 			if (!fileExists) {
 				await onWriteContent('defines.json', {
 					fee: 3,

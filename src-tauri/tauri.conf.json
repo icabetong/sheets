@@ -60,7 +60,7 @@
 			},
 			"fs": {
 				"all": true,
-				"scope": ["$APP/*", "$APPDATA/*", "$DESKTOP/*"]
+				"scope": ["$APPDATA/*", "$DESKTOP/*", "$DOCUMENT/*"]
 			},
 			"path": {
 				"all": true

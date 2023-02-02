@@ -1,3 +1,5 @@
+import 'vite/client'
+
 declare global {
 	interface EntryCore {
 		customer?: string
@@ -31,4 +33,3 @@ declare namespace svelte.JSX {
 	}
 	/* eslint-enable @typescript-eslint/no-unused-vars */
 }
-export {}
