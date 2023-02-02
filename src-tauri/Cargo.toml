@@ -1,11 +1,11 @@
 [package]
-name = "tauri-svelte-template"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
-default-run = "tauri-svelte-template"
+name = "sheets"
+version = "0.0.2"
+description = "A Profit Dashboard desktop app written using Tauri and Svelte"
+authors = ["Isaiah Collins Abetong"]
+license = "MIT"
+repository = "https://github.com/icabetong/sheets"
+default-run = "sheets"
 edition = "2018"
 build = "src/build.rs"
 

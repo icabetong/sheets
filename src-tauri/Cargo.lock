@@ -2182,6 +2182,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "sheets"
+version = "0.0.2"
+dependencies = [
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+]
+
+[[package]]
 name = "siphasher"
 version = "0.3.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2514,16 +2524,6 @@ dependencies = [
  "webview2-com",
  "windows 0.39.0",
  "wry",
-]
-
-[[package]]
-name = "tauri-svelte-template"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
 ]
 
 [[package]]
