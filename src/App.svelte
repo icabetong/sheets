@@ -13,6 +13,7 @@
 	import { defines } from '$stores/defines'
 	import { onReadContent, onWriteContent } from '$shared/storage'
 	import { parseFromCSV } from '$shared/parser'
+	import { randomId } from '$shared/tools'
 
 	let show = false
 	onMount(async () => {
@@ -70,7 +71,16 @@
 		if (Array.isArray(path) || !path) return
 
 		const source = await readTextFile(path)
-		$entries = $entries.concat(parseFromCSV(source))
+		$entries = $entries.concat(
+			parseFromCSV<Entry>(source, (values: string[]) => ({
+				customer: values[0],
+				product: values[1],
+				description: values[2],
+				amount: parseInt(values[3]),
+				timestamp: Date.parse(values[4]),
+				id: randomId()
+			}))
+		)
 		await onWriteContent('entries.json', $entries)
 	}
 

@@ -1,3 +1,9 @@
+/**
+ *
+ * @param source the source object array that will be searched
+ * @param query the search query
+ * @returns an array which has all matching constraints with the query
+ */
 export function search<T extends {}>(source: T[], query: string): T[] {
 	query = query.trim().toLowerCase()
 
@@ -5,7 +11,6 @@ export function search<T extends {}>(source: T[], query: string): T[] {
 		const values = Object.values(item)
 		return (
 			values.filter((value) => {
-				console.log(value)
 				if (typeof value === 'string') return value.toLowerCase().includes(query)
 			}).length > 0
 		)
