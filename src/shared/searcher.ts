@@ -4,7 +4,7 @@
  * @param query the search query
  * @returns an array which has all matching constraints with the query
  */
-export function search<T extends {}>(source: T[], query: string): T[] {
+export function search<T extends object>(source: T[], query: string): T[] {
 	query = query.trim().toLowerCase()
 
 	return source.filter((item) => {
