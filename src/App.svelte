@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { open } from '@tauri-apps/api/dialog'
-	import { BaseDirectory, createDir, exists, readTextFile } from '@tauri-apps/api/fs'
+	import { BaseDirectory, exists, readTextFile } from '@tauri-apps/api/fs'
 	import { window, os } from '@tauri-apps/api'
 	import { onMount } from 'svelte'
 	import Main from '$pages/Main.svelte'
@@ -117,9 +117,10 @@
 
 <style lang="postcss">
 	:global(body) {
-		background: theme(colors.white);
+		background-color: theme(colors.white);
+		transition: background-color 0.3s;
 	}
 	:global(body.dark) {
-		background: theme(colors.gray.800);
+		background-color: theme(colors.gray.800);
 	}
 </style>

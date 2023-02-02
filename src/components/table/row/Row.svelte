@@ -9,7 +9,7 @@
 	const remove = () => dispatcher('remove', entry)
 
 	const currencyFormatter = getCurrencyFormatter(true)
-	const dateTimeFormatter = getDateTimeFormatter('short')
+	const dateTimeFormatter = getDateTimeFormatter('medium')
 </script>
 
 <tr
@@ -18,7 +18,7 @@
 	<th scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
 		{entry.customer}
 	</th>
-	<td class="hidden px-6 py-4 xl:block">{dateTimeFormatter.format(new Date(entry.timestamp))}</td>
+	<td class="hidden px-6 py-4 lg:block">{dateTimeFormatter.format(new Date(entry.timestamp))}</td>
 	<td class="px-6 py-4"> {entry.product} </td>
 	<td class="px-6 py-4"> {entry.description} </td>
 	<td class="px-6 py-4"> {currencyFormatter.format(entry.amount)} </td>

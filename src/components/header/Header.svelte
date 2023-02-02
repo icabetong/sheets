@@ -7,7 +7,7 @@
 	export let title: string
 </script>
 
-<div class="sticky top-0 flex items-center bg-white py-8 dark:bg-gray-800">
+<div class="sticky top-0 flex items-center py-8">
 	{#if showBack}
 		<button on:click={pop}>
 			<Icon src={ChevronLeft} class="mr-4 h-6 w-6" />

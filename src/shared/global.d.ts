@@ -2,9 +2,9 @@ import 'vite/client'
 
 declare global {
 	interface EntryCore {
-		customer?: string
+		customer: string
 		product: string
-		description?: string
+		description: string
 		amount: number
 	}
 	interface Entry extends EntryCore {
@@ -24,12 +24,12 @@ declare global {
 		description?: string
 		amount?: string
 	}
-}
 
-declare namespace svelte.JSX {
 	/* eslint-disable @typescript-eslint/no-unused-vars */
-	interface HTMLProps<T> {
-		onClickOutside?: (e: CustomEvent) => void
+	namespace svelteHTML {
+		interface HTMLAttributes<T> {
+			'on:clickOutside'?: (e: CustomEvent) => void
+		}
 	}
 	/* eslint-enable @typescript-eslint/no-unused-vars */
 }

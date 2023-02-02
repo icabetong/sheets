@@ -1,15 +1,15 @@
-<script>
+<script lang="ts">
 	import { createEventDispatcher } from 'svelte'
 	import { Icon } from '@steeze-ui/svelte-icon'
 	import { ChevronDown } from '@steeze-ui/heroicons'
 	import { createPopperActions } from 'svelte-popperjs'
 	import { clickOutside } from '$shared/directives/click-outside'
 
-	const dispatcher = createEventDispatcher()
-	const select = (value) => dispatcher('select', value)
+	const dispatcher = createEventDispatcher<{ select: string }>()
+	const select = (value: string) => dispatcher('select', value)
 
-	export let value
-	export let options
+	export let value: string
+	export let options: string[]
 	export let placeholder = ''
 
 	let open = false
@@ -20,9 +20,9 @@
 		modifiers: [{ name: 'offset', options: { offset: [0, 8] } }]
 	}
 
-	const onOptionsSelect = (event) => {
+	const onOptionsSelect = (value: string) => {
 		open = false
-		select(event)
+		select(value)
 	}
 </script>
 

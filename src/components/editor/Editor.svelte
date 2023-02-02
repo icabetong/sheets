@@ -70,7 +70,7 @@
 						type="text"
 						id="product"
 						class="form-input"
-						placeholder="Globe Telecom"
+						placeholder="Globe"
 						class:error={$errors.product}
 						bind:value={$form.product} />
 				{/if}
