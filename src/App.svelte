@@ -28,18 +28,10 @@
 	})
 
 	const dir = BaseDirectory.AppData
-	const onCreateStorage = async () => {
-		await createDir(env, {
-			dir,
-			recursive: true
-		})
-	}
-
 	const onPrepareDataStorage = async () => {
 		try {
 			let fileExists = await exists('entries.json', { dir })
 			if (!fileExists) {
-				await onCreateStorage()
 				await onWriteContent('entries.json', [])
 			}
 			fileExists = await exists('defines.json', { dir })
