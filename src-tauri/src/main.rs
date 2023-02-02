@@ -5,7 +5,8 @@
 
 use tauri::api::shell;
 use tauri::{
-  CustomMenuItem, Manager, Menu, MenuEntry, MenuItem, Submenu, WindowBuilder,
+  // Needed for macOS: AboutMetadata
+  AboutMetadata, CustomMenuItem, Manager, Menu, MenuEntry, MenuItem, Submenu, WindowBuilder,
   WindowUrl,
 };
 
