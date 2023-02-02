@@ -13,7 +13,7 @@
 	import { defines } from '$stores/defines'
 	import { onReadContent, onWriteContent } from '$shared/storage'
 	import { parseFromCSV } from '$shared/parser'
-	import { randomId } from '$shared/tools'
+	import { isDev, randomId } from '$shared/tools'
 
 	let show = false
 	onMount(async () => {
@@ -30,11 +30,12 @@
 	const dir = BaseDirectory.AppData
 	const onPrepareDataStorage = async () => {
 		try {
-			let fileExists = await exists('entries.json', { dir })
+			const dev = isDev() ? '-dev' : ''
+			let fileExists = await exists(`entries${dev}.json`, { dir })
 			if (!fileExists) {
 				await onWriteContent('entries.json', [])
 			}
-			fileExists = await exists('defines.json', { dir })
+			fileExists = await exists(`defines${dev}.json`, { dir })
 
 			if (!fileExists) {
 				await onWriteContent('defines.json', {
