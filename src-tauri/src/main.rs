@@ -65,9 +65,11 @@ fn main() {
           MenuItem::SelectAll.into(),
           #[cfg(target_os = "macos")]
           MenuItem::Separator.into(),
+          MenuItem::Separator.into(),
           CustomMenuItem::new("save", "Save").accelerator("CmdOrControl+S").into(),
           MenuItem::Separator.into(),
           CustomMenuItem::new("defines", "Defines").accelerator("CmdOrControl+D").into(),
+          CustomMenuItem::new("deposits", "Deposits").into()
         ]),
       )),
       #[cfg(target_os = "macos")]

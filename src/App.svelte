@@ -14,6 +14,8 @@
 	import { onReadContent, onWriteContent } from '$shared/storage'
 	import { parseFromCSV } from '$shared/parser'
 	import { isDev, randomId } from '$shared/tools'
+	import { deposits } from '$stores/deposits'
+	import Deposits from '$pages/Deposits.svelte'
 
 	let show = false
 	onMount(async () => {
@@ -33,12 +35,12 @@
 			const dev = isDev() ? '-dev' : ''
 			let fileExists = await exists(`entries${dev}.json`, { dir })
 			if (!fileExists) {
-				await onWriteContent('entries.json', [])
+				await onWriteContent(`entries.json`, [])
 			}
 			fileExists = await exists(`defines${dev}.json`, { dir })
 
 			if (!fileExists) {
-				await onWriteContent('defines.json', {
+				await onWriteContent(`defines.json`, {
 					fee: 3,
 					discount: 0,
 					products: [],
@@ -46,11 +48,19 @@
 				})
 			}
 
-			let parsedEntries: Entry[] = await onReadContent<Entry[]>('entries.json')
+			fileExists = await exists(`deposits${dev}.json`, { dir })
+			if (!fileExists) {
+				await onWriteContent(`deposits.json`, [])
+			}
+
+			let parsedEntries: Entry[] = await onReadContent<Entry[]>(`entries.json`)
 			entries.set(parsedEntries)
 
-			let parsedDefines: Define = await onReadContent<Define>('defines.json')
+			let parsedDefines: Define = await onReadContent<Define>(`define.json`)
 			defines.set(parsedDefines)
+
+			let parsedDeposits: Deposit[] = await onReadContent<Deposit[]>(`deposits.json`)
+			deposits.set(parsedDeposits)
 		} catch (e) {
 			console.error(e)
 		}
@@ -59,6 +69,7 @@
 	const onWriteData = async () => {
 		await onWriteContent('entries.json', $entries)
 		await onWriteContent('defines.json', $defines)
+		await onWriteContent('deposit.json', $deposits)
 	}
 
 	const onImportData = async () => {
@@ -83,6 +94,7 @@
 	window.appWindow.onMenuClicked(({ payload }) => {
 		switch (payload) {
 			case 'defines':
+			case 'deposits':
 			case 'preferences':
 				push(`/${payload}`)
 				break
@@ -101,6 +113,7 @@
 	const routes = {
 		'/': Main,
 		'/defines': Defines,
+		'/deposits': Deposits,
 		'/preferences': Preferences
 	}
 </script>

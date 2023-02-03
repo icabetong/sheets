@@ -17,12 +17,29 @@ declare global {
 		products: string[]
 		descriptions: string[]
 	}
+	interface DepositCore {
+		amount: number
+		bank: string
+	}
+	interface Deposit extends DepositCore {
+		id: string
+		timestamp: number
+	}
 
+	interface DepositFormError {
+		bank?: string
+		amount?: string
+	}
 	interface EntryFormError {
 		customer?: string
 		product?: string
 		description?: string
 		amount?: string
+	}
+
+	interface TableEvents<T> {
+		select: T
+		remove: T
 	}
 
 	/* eslint-disable @typescript-eslint/no-unused-vars */

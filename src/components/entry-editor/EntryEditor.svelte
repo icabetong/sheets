@@ -33,7 +33,7 @@
 			dispatcher('submit', {
 				...form,
 				id: entry !== null ? entry.id : randomId(),
-				timestamp: Date.now()
+				timestamp: entry !== null ? entry.timestamp : Date.now()
 			})
 			dismiss()
 		}

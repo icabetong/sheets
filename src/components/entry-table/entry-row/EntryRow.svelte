@@ -4,7 +4,7 @@
 
 	export let entry: Entry
 
-	const dispatcher = createEventDispatcher<{ select: Entry; remove: Entry }>()
+	const dispatcher = createEventDispatcher<TableEvents<Entry>>()
 	const select = () => dispatcher('select', entry)
 	const remove = () => dispatcher('remove', entry)
 
