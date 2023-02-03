@@ -1,6 +1,6 @@
 [package]
 name = "sheets"
-version = "0.0.2"
+version = "0.0.3"
 description = "A Profit Dashboard desktop app written using Tauri and Svelte"
 authors = ["Isaiah Collins Abetong"]
 license = "MIT"
