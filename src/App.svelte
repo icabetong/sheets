@@ -56,7 +56,7 @@
 			let parsedEntries: Entry[] = await onReadContent<Entry[]>(`entries.json`)
 			entries.set(parsedEntries)
 
-			let parsedDefines: Define = await onReadContent<Define>(`define.json`)
+			let parsedDefines: Define = await onReadContent<Define>(`defines.json`)
 			defines.set(parsedDefines)
 
 			let parsedDeposits: Deposit[] = await onReadContent<Deposit[]>(`deposits.json`)
