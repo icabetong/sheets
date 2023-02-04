@@ -2,7 +2,7 @@
 	"name": "sheets",
 	"private": true,
 	"type": "module",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"license": "MIT",
 	"scripts": {
 		"tauri": "tauri",
