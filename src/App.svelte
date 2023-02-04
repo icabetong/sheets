@@ -69,7 +69,7 @@
 	const onWriteData = async () => {
 		await onWriteContent('entries.json', $entries)
 		await onWriteContent('defines.json', $defines)
-		await onWriteContent('deposit.json', $deposits)
+		await onWriteContent('deposits.json', $deposits)
 	}
 
 	const onImportData = async () => {
